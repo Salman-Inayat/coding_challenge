@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "coding_challenge",
+    "slug": "coding_challenge",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "coding_challenge"
+}
