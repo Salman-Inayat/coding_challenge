@@ -68,6 +68,8 @@ export const HomeScreen = ({ navigation }) => {
           size="xl"
           mb={3}
           borderRadius={7}
+          width={300}
+          height={200}
         />
         <Text mb={3}>{item.item.author} </Text>
         <Button
@@ -92,7 +94,7 @@ export const HomeScreen = ({ navigation }) => {
     </Box>
   ) : (
     // <Box p={3} flex={1} safeAreaTop backgroundColor="white" >
-    <Container centerContent={true}>
+    <Container centerContent={true} p={2} mx={10}>
       <FlatList
         data={images.map((img) => img)}
         keyExtractor={keyExtractor}
@@ -103,6 +105,7 @@ export const HomeScreen = ({ navigation }) => {
             loadMore();
           }
         }}
+        width="100%"
       />
     </Container>
     // </Box>
