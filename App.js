@@ -24,7 +24,11 @@ export default function App() {
               component={HomeScreen}
               options={{ title: "Gallery" }}
             />
-            <Stack.Screen name="ImageDetails" component={ImageDetailsScreen} />
+            <Stack.Screen
+              name="ImageDetails"
+              component={ImageDetailsScreen}
+              options={{ title: "Image" }}
+            />
           </Stack.Navigator>
         </QueryClientProvider>
       </NativeBaseProvider>

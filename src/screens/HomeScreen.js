@@ -14,13 +14,15 @@ import {
 export const HomeScreen = ({ navigation }) => {
   const [images, setImages] = useState([]);
   const [loaded, setIsLoaded] = useState(false);
+  const [page, setPage] = useState(1);
+  let onEndReachedCalledDuringMomentum = true;
 
   useEffect(() => {
-    fetchImages(10);
+    fetchImages(page);
   }, []);
 
-  const fetchImages = (count = 10) => {
-    fetch(`https://picsum.photos/v2/list?limit=${count}`)
+  const fetchImages = (page) => {
+    fetch(`https://picsum.photos/v2/list?page=${page}&limit=10`)
       .then((res) => res.json())
       .then((data) => {
         setImages([...images, ...data]);
@@ -29,8 +31,9 @@ export const HomeScreen = ({ navigation }) => {
   };
 
   const loadMore = () => {
-    console.log("load more images");
-    fetchImages(5);
+    setPage(page + 1);
+    fetchImages(page + 1);
+    console.log("load more images", page);
   };
 
   const renderSpinner = () => {
@@ -44,7 +47,6 @@ export const HomeScreen = ({ navigation }) => {
   const renderData = (item) => {
     return (
       <Box
-        px={2}
         mb={5}
         backgroundColor="red"
         border="1"
@@ -89,16 +91,20 @@ export const HomeScreen = ({ navigation }) => {
       <Spinner color="emerald.500" size="lg" />
     </Box>
   ) : (
-    <Box p={3} flex={1} safeAreaTop backgroundColor="white">
-      <Container>
-        <FlatList
-          data={images.map((img) => img)}
-          keyExtractor={keyExtractor}
-          renderItem={renderData}
-          // onEndReached={loadMore}
-          // onEndReachedThreshold={0.5}
-        />
-      </Container>
-    </Box>
+    // <Box p={3} flex={1} safeAreaTop backgroundColor="white" >
+    <Container centerContent={true}>
+      <FlatList
+        data={images.map((img) => img)}
+        keyExtractor={keyExtractor}
+        renderItem={renderData}
+        onEndReachedThreshold={0.1}
+        onEndReached={({ distanceFromEnd }) => {
+          if (distanceFromEnd >= 0) {
+            loadMore();
+          }
+        }}
+      />
+    </Container>
+    // </Box>
   );
 };
